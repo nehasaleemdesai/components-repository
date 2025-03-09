@@ -1,5 +1,5 @@
 import React from "react";
-import { GoBell, GoCloudDownload, GoDatabase } from "react-icons/go";
+// import { GoBell, GoCloudDownload, GoDatabase } from "react-icons/go";
 import Button from "../components/Button";
 
 const ButtonPage = () => {
@@ -7,19 +7,19 @@ const ButtonPage = () => {
     <div>
       <div>
         <Button primary rounded>
-          <GoBell />
+          {/* <GoBell /> */}
           Primary
         </Button>
       </div>
       <div>
         <Button secondary rounded outline>
-          <GoCloudDownload />
+          {/* <GoCloudDownload /> */}
           Buy Now!
         </Button>
       </div>
       <div>
         <Button success rounded>
-          <GoDatabase />
+          {/* <GoDatabase /> */}
           See Deal!
         </Button>
       </div>

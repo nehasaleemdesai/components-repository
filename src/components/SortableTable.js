@@ -1,59 +1,44 @@
-import { useState } from "react";
-import { GoArrowSmallDown, GoArrowSmallUp } from "react-icons/go";
+// import { GoArrowSmallDown, GoArrowSmallUp } from "react-icons/go";
+import {
+  FaArrowUpWideShort,
+  FaArrowDownWideShort,
+  FaArrowDownUpAcrossLine,
+} from "react-icons/fa6";
 import Table from "./Table";
+import useSort from "../hooks/use-sort";
 
 const SortableTable = (props) => {
-  const [sortOrder, setSortOrder] = useState(null);
-  const [sortBy, setSortBy] = useState(null);
   const { config, data } = props;
-
-  const handleClick = (label) => {
-    if (sortBy && label !== sortBy) {
-      setSortOrder("asc");
-      setSortBy(label);
-      return;
-    }
-
-    // Set sort direction
-    if (sortOrder === null) {
-      setSortOrder("asc");
-      setSortBy(label);
-    } else if (sortOrder === "asc") {
-      setSortOrder("desc");
-      setSortBy(label);
-    } else {
-      setSortOrder(null);
-      setSortBy(null);
-    }
-  };
+  const { sortOrder, sortBy, sortedData, setSortColumn } = useSort(
+    data,
+    config
+  );
 
   const getIcons = (label) => {
     if (label !== sortBy) {
       return (
-        <div>
-          <GoArrowSmallUp />
-          <GoArrowSmallDown />
+        <div className="mr-1">
+          <FaArrowDownUpAcrossLine />
         </div>
       );
     }
 
     if (sortOrder === null) {
       return (
-        <div>
-          <GoArrowSmallUp />
-          <GoArrowSmallDown />
+        <div className="mr-1">
+          <FaArrowDownUpAcrossLine />
         </div>
       );
     } else if (sortOrder === "asc") {
       return (
         <div>
-          <GoArrowSmallUp />
+          <FaArrowUpWideShort />
         </div>
       );
     } else if (sortOrder === "desc") {
       return (
         <div>
-          <GoArrowSmallDown />
+          <FaArrowDownWideShort />
         </div>
       );
     }
@@ -68,11 +53,11 @@ const SortableTable = (props) => {
         <th
           className="cursor-pointer hover:bg-gray-100"
           onClick={() => {
-            handleClick(column.label);
+            setSortColumn(column.label);
           }}
         >
           <div className="flex items-center">
-            {getIcons(column.label)}
+            {getIcons(column.label, sortBy, sortOrder)}
             {column.label}
           </div>
         </th>
@@ -82,26 +67,6 @@ const SortableTable = (props) => {
 
   console.log(config);
   console.log(updatedConfig);
-
-  // Only sort data if sortOrder 7 sortBy are not null
-  // Make a copy of the 'data' array to avoid mutating the original array
-  // Find the correct sortValue function and use it for sorting
-  let sortedData = data;
-  if (sortOrder && sortBy) {
-    const { sortValue } = config.find((column) => column.label === sortBy);
-    sortedData = [...data].sort((a, b) => {
-      const valueA = sortValue(a);
-      const valueB = sortValue(b);
-
-      const reverseOrder = sortOrder === "asc" ? 1 : -1;
-
-      if (typeof valueA === "string") {
-        return valueA.localeCompare(valueB) * reverseOrder;
-      } else {
-        return (valueA - valueB) * reverseOrder;
-      }
-    });
-  }
 
   return <Table {...props} config={updatedConfig} data={sortedData} />;
 };
