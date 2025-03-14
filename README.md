@@ -2,6 +2,10 @@
 
 A collection of reusable React components, built with modern React hooks and Tailwind CSS. This project focuses on enhancing component reusability and deepening React hooks knowledge.  
 
+## Live Site
+
+Check out the live version of the **Components Repository** here: [Live Site](https://nehasaleemdesai.github.io/components-repository/)
+
 ## 🚀 Tech Stack  
 - **Languages:** HTML, CSS, JavaScript  
 - **Frameworks & Libraries:** React, Tailwind CSS  
